@@ -12,6 +12,7 @@
             position: relative;
             background: #f5f5f5;
             border: 2px solid #333;
+            margin-right: 200px;
         }
 
         .linear-actuator {
@@ -26,7 +27,7 @@
         .push-rod {
             width: 10px;
             height: 150px;
-            background: #1565C0;
+            background: #2196F3;
             position: absolute;
             bottom: 250px;
             left: 195px;
@@ -57,7 +58,7 @@
         .membrane {
             width: 140px;
             height: 20px;
-            background: #2196F3;
+            background: #666;
             position: absolute;
             bottom: 470px;
             left: 130px;
@@ -250,25 +251,6 @@
             }
         }
 
-        .bushing {
-            width: 50px;
-            height: 10px;
-            background: #4CAF50;
-            position: absolute;
-            left: 175px;
-            z-index: 2;
-        }
-
-        .bushing-top {
-            bottom: 380px;
-            animation: bushingTopMovement 4s infinite ease-in-out;
-        }
-
-        .bushing-bottom {
-            bottom: 280px;
-            animation: bushingBottomMovement 4s infinite ease-in-out;
-        }
-
         .coupling-point {
             width: 16px;
             height: 16px;
@@ -288,16 +270,6 @@
             background: #333;
             left: -2px;
             top: 7px;
-        }
-
-        @keyframes bushingTopMovement {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
-        }
-
-        @keyframes bushingBottomMovement {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-25px); }
         }
 
         @keyframes couplingMovement {
@@ -347,6 +319,46 @@
             transform: translateX(-50%);
             font-weight: bold;
             font-size: 16px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+
+        /* Legend styles */
+        .legend {
+            position: absolute;
+            right: -180px;
+            top: 200px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px;
+            border: 1px solid #333;
+            font-size: 12px;
+            width: 150px;
+        }
+
+        .legend-item {
+            margin: 8px 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .legend-symbol {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+        }
+
+        /* Remove phase numbers */
+        .phase-indicator {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-weight: bold;
+            font-size: 16px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 5px 10px;
+            border-radius: 4px;
         }
     </style>
 </head>
@@ -368,19 +380,40 @@
         <div class="micro-flow micro-flow-1"></div>
         <div class="micro-flow micro-flow-2"></div>
         <div class="micro-flow micro-flow-3"></div>
-        <div class="bushing bushing-top"></div>
-        <div class="bushing bushing-bottom"></div>
-        <div class="coupling-point"></div>
         <div class="valve valve-inlet"></div>
         <div class="valve valve-outlet"></div>
-        <div class="phase-indicator">Phase: <span class="phase-text"></span></div>
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-symbol" style="background: #ef5350;"></div>
+                <span>Valve</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-symbol" style="background: #666;"></div>
+                <span>Membrane</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-symbol" style="background: #2196F3;"></div>
+                <span>Push Rod</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-symbol" style="border: 2px solid #800;"></div>
+                <span>Blood Chamber</span>
+            </div>
+        </div>
+        <div class="phase-indicator">
+            <span class="phase-text"></span>
+        </div>
     </div>
 
     <script>
-        // Add phase text animation
         const phaseText = document.querySelector('.phase-text');
+        
         setInterval(() => {
-            phaseText.textContent = phaseText.textContent === 'Filling' ? 'Ejection' : 'Filling';
+            if (phaseText.textContent === 'Phase 1: Filling') {
+                phaseText.textContent = 'Phase 2: Ejection';
+            } else {
+                phaseText.textContent = 'Phase 1: Filling';
+            }
         }, 2000);
     </script>
 </body>
